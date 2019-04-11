@@ -14,9 +14,7 @@ public class Principal {
 	        Document aluno = alunos.find().first();//selecionar o primeiro documento (aluno)
 	        System.out.println(aluno);
 	        
-	        alunos.updateOne(Filters.eq("nome", "Joao"),//filtro que selecionará o aluno João. eq: buscamos um aluno em nossa coleção cujo nome é Joao  
-	        			new Document("$set", //o tipo de atualização ($set) para indicar que trata-se de uma atualização parcial
-	        			new Document("nome", "Joao Silva")));//novo dado, que irá substituir o atual:
+	        alunos.deleteOne(Filters.eq("nome", "Joao Silva"));// indicando o documento a ser removido da coleção.
 	        
 	        cliente.close();//fechar conexão com o bd
 	}
