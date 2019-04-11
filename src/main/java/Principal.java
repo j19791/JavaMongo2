@@ -1,11 +1,9 @@
-import java.util.Arrays;
-import java.util.Date;
-
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 public class Principal {
 
@@ -16,16 +14,9 @@ public class Principal {
 	        Document aluno = alunos.find().first();//selecionar o primeiro documento (aluno)
 	        System.out.println(aluno);
 	        
-	        Document novoAluno = new Document("nome", "Joao")
-	        		  .append("data_nascimento", new Date(2003, 10, 10)) //demais pares adicionados ao documento 
-	        		  .append("curso", new Document("nome", "Historia"))
-	        		  .append("notas", Arrays.asList(10, 9, 8))
-	        		  .append("habilidades", Arrays.asList(
-	        		          new Document().append("nome", "Ingles").append("nível", "Básico"),
-	        		          new Document().append("nome", "Espanhol").append("nível", "Básico")));
-	        
-	        
-	        alunos.insertOne(novoAluno); //inserindo o aluno
+	        alunos.updateOne(Filters.eq("nome", "Joao"),//filtro que selecionará o aluno João. eq: buscamos um aluno em nossa coleção cujo nome é Joao  
+	        			new Document("$set", //o tipo de atualização ($set) para indicar que trata-se de uma atualização parcial
+	        			new Document("nome", "Joao Silva")));//novo dado, que irá substituir o atual:
 	        
 	        cliente.close();//fechar conexão com o bd
 	}
